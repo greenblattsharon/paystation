@@ -1,10 +1,10 @@
 /**
  * Testcases for the Pay Station system.
- *
+ * <p>
  * This source code is from the book "Flexible, Reliable Software: Using
  * Patterns and Agile Development" published 2010 by CRC Press. Author: Henrik B
  * Christensen Computer Science Department Aarhus University
- *
+ * <p>
  * This source code is provided WITHOUT ANY WARRANTY either expressed or
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
@@ -12,7 +12,9 @@
 package paystation.domain;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 
 import java.util.Map;
@@ -145,7 +147,7 @@ public class PayStationImplTest {
      * Call to empty returns the total amount entered
      */
     @Test
-    public void shouldReturnTotalAfterEmpty() throws IllegalCoinException{
+    public void shouldReturnTotalAfterEmpty() throws IllegalCoinException {
         ps.addPayment(10);
         ps.addPayment(5);
         ps.addPayment(25);
@@ -222,5 +224,17 @@ public class PayStationImplTest {
         int size = mixtureCoins.size();
         assertEquals("There should be 2 keys in the map", 2, size);
         assertEquals("There should not be a key for coin of 25", false, mixtureCoins.containsKey(25));
+    }
+
+    /**
+     * Call to cancel clears the map
+     */
+    @Test
+    public void shouldClearMapAfterCancel() throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.cancel();
+        Map<Integer, Integer> mixtureCoins = ps.cancel();
+        int size = mixtureCoins.size();
+        assertEquals("There should be no keys in the map", 0, size);
     }
 }
