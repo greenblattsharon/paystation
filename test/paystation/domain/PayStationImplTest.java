@@ -189,5 +189,25 @@ public class PayStationImplTest {
         int size = oneCoin.size();
         assertEquals("There should be one key in the map", 1, size);
         assertEquals("The one key will have one coin in the map", (Integer) 1, oneCoin.get(5));
+
+    }
+
+    /**
+     * Call to cancel returns a map containing a mixture of coins entered
+     */
+    @Test
+    public void shouldReturnMixtureCoinsInMapAfterCancel() throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(5);
+        ps.addPayment(10);
+        ps.addPayment(10);
+        ps.addPayment(25);
+        ps.addPayment(25);
+        Map<Integer, Integer> mixtureCoins = ps.cancel();
+        int size = mixtureCoins.size();
+        assertEquals("There should be 3 keys in the map", 3, size);
+        assertEquals("There should be two 5 coins in the map", (Integer) 2, mixtureCoins.get(5));
+        assertEquals("There should be two 10 coins in the map", (Integer) 2, mixtureCoins.get(10));
+        assertEquals("There should be two 25 coins in the map", (Integer) 2, mixtureCoins.get(25));
     }
 }
