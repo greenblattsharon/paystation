@@ -4,36 +4,39 @@ import java.util.Map;
 
 /**
  * Implementation of the pay station.
- *
+ * <p>
  * Responsibilities:
- *
- * 1) Accept payment; 
- * 2) Calculate parking time based on payment; 
- * 3) Know earning, parking time bought; 
- * 4) Issue receipts; 
+ * <p>
+ * 1) Accept payment;
+ * 2) Calculate parking time based on payment;
+ * 3) Know earning, parking time bought;
+ * 4) Issue receipts;
  * 5) Handle buy and cancel events.
- *
+ * <p>
  * This source code is from the book "Flexible, Reliable Software: Using
  * Patterns and Agile Development" published 2010 by CRC Press. Author: Henrik B
  * Christensen Computer Science Department Aarhus University
- *
+ * <p>
  * This source code is provided WITHOUT ANY WARRANTY either expressed or
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
 public class PayStationImpl implements PayStation {
-    
+
     private int insertedSoFar;
     private int timeBought;
-    private int totalAmountInserted;
+    public int totalAmount;
 
     @Override
     public void addPayment(int coinValue)
             throws IllegalCoinException {
         switch (coinValue) {
-            case 5: break;
-            case 10: break;
-            case 25: break;
+            case 5:
+                break;
+            case 10:
+                break;
+            case 25:
+                break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
         }
@@ -49,7 +52,7 @@ public class PayStationImpl implements PayStation {
     @Override
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
-        totalAmountInserted = insertedSoFar;
+        totalAmount += insertedSoFar;
         reset();
         return r;
     }
@@ -62,9 +65,9 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public int empty() {
-        int totalAmountInserted_return = totalAmountInserted;
-        totalAmountInserted = 0;
-        return totalAmountInserted_return;
+        int totalAmount_return = totalAmount;
+        totalAmount = 0;
+        return totalAmount_return;
 
     }
 

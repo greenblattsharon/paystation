@@ -164,4 +164,16 @@ public class PayStationImplTest {
         int totalAmount = ps.empty();
         assertEquals("Cancelled Entry does not add to the amount returned by empty", 10, totalAmount);
     }
+
+    /**
+     *
+     */
+    @Test
+    public void shouldResetTotalToZeroAfterEmptyCalled() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.buy();
+        ps.empty();
+        int totalAmount = ps.empty();
+        assertEquals("Cancelled Entry does not add to the amount returned by empty", 0, totalAmount);
+    }
 }
