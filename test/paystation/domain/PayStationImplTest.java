@@ -138,4 +138,16 @@ public class PayStationImplTest {
         assertEquals("Insert after cancel should work",
                 10, ps.readDisplay());
     }
+
+    /**
+     * Call to empty returns the total amount entered
+     */
+    @Test
+    public void shouldReturnTotalAfterEmpty() throws IllegalCoinException{
+        ps.addPayment(10);
+        ps.addPayment(5);
+        ps.addPayment(25);
+        int totalAmount = ps.empty();
+        assertEquals("Empty should return total amount entered", 40, totalAmount);
+    }
 }

@@ -60,7 +60,7 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public int empty() {
-        return 0;
+        return (timeBought / 2) * 5;
     }
 
     private void reset() {
