@@ -79,6 +79,7 @@ public class PayStationImpl implements PayStation {
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
         totalAmount += insertedSoFar;
+        coinsCollected.clear();
         reset();
         return r;
     }

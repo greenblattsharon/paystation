@@ -233,8 +233,21 @@ public class PayStationImplTest {
     public void shouldClearMapAfterCancel() throws IllegalCoinException {
         ps.addPayment(5);
         ps.cancel();
-        Map<Integer, Integer> mixtureCoins = ps.cancel();
-        int size = mixtureCoins.size();
+        Map<Integer, Integer> cleanMap = ps.cancel();
+        int size = cleanMap.size();
+        assertEquals("There should be no keys in the map", 0, size);
+    }
+
+    /**
+     * Call to buy clears the map
+     */
+    @Test
+    public void shouldClearMapAfterBuy() throws IllegalCoinException {
+        ps.addPayment(5);
+        ps.addPayment(10);
+        ps.buy();
+        Map<Integer, Integer> cleanMap = ps.cancel();
+        int size = cleanMap.size();
         assertEquals("There should be no keys in the map", 0, size);
     }
 }
