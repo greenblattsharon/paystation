@@ -25,6 +25,7 @@ public class PayStationImpl implements PayStation {
     
     private int insertedSoFar;
     private int timeBought;
+    private int totalAmountInserted;
 
     @Override
     public void addPayment(int coinValue)
@@ -48,6 +49,7 @@ public class PayStationImpl implements PayStation {
     @Override
     public Receipt buy() {
         Receipt r = new ReceiptImpl(timeBought);
+        totalAmountInserted = insertedSoFar;
         reset();
         return r;
     }
@@ -60,7 +62,10 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public int empty() {
-        return (timeBought / 2) * 5;
+        int totalAmountInserted_return = totalAmountInserted;
+        totalAmountInserted = 0;
+        return totalAmountInserted_return;
+
     }
 
     private void reset() {
