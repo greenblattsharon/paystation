@@ -15,6 +15,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
+import java.util.Map;
+
 public class PayStationImplTest {
 
     PayStation ps;
@@ -166,7 +168,7 @@ public class PayStationImplTest {
     }
 
     /**
-     *
+     * Call to empty resets the total to zero
      */
     @Test
     public void shouldResetTotalToZeroAfterEmptyCalled() throws IllegalCoinException {
@@ -175,5 +177,17 @@ public class PayStationImplTest {
         ps.empty();
         int totalAmount = ps.empty();
         assertEquals("Cancelled Entry does not add to the amount returned by empty", 0, totalAmount);
+    }
+
+    /**
+     * Call to cancel returns a map containing one coin entered
+     */
+    @Test
+    public void shouldReturnOneCoinInMapAfterCancel() throws IllegalCoinException {
+        ps.addPayment(5);
+        Map<Integer, Integer> oneCoin = ps.cancel();
+        int size = oneCoin.size();
+        assertEquals("There should be one key in the map", 1, size);
+        assertEquals("The one key will have one coin in the map", (Integer) 1, oneCoin.get(5));
     }
 }

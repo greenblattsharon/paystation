@@ -1,5 +1,6 @@
 package paystation.domain;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,17 +26,42 @@ public class PayStationImpl implements PayStation {
 
     private int insertedSoFar;
     private int timeBought;
-    public int totalAmount;
+    private int totalAmount;
+    private Map<Integer, Integer> coinsCollected = new HashMap<>();
+
 
     @Override
     public void addPayment(int coinValue)
             throws IllegalCoinException {
+        Boolean isPresent;
         switch (coinValue) {
             case 5:
+                int five = 0;
+                isPresent = coinsCollected.containsKey(5);
+                if ((isPresent != null) & isPresent) {
+                    five = coinsCollected.get(5);
+                }
+                ++five;
+                coinsCollected.put(5, five);
+
                 break;
             case 10:
+                int ten = 0;
+                isPresent = coinsCollected.containsKey(10);
+                if ((isPresent != null) & isPresent) {
+                    ten = coinsCollected.get(10);
+                }
+                ten++;
+                coinsCollected.put(10, ten);
                 break;
             case 25:
+                int twentyFive = 0;
+                isPresent = coinsCollected.containsKey(25);
+                if ((isPresent != null) & isPresent) {
+                    twentyFive = coinsCollected.get(25);
+                }
+                twentyFive++;
+                coinsCollected.put(25, twentyFive);
                 break;
             default:
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
@@ -59,8 +85,21 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public Map<Integer, Integer> cancel() {
+        Map<Integer, Integer> coinsCollected_return = new HashMap<>();
+
+        if (coinsCollected.containsKey(5)) {
+            coinsCollected_return.put(5, coinsCollected.get(5));
+        }
+        if (coinsCollected.containsKey(10)) {
+            coinsCollected_return.put(10, coinsCollected.get(10));
+        }
+        if (coinsCollected.containsKey(25)) {
+            coinsCollected_return.put(25, coinsCollected.get(25));
+        }
+
         reset();
-        return null;
+        coinsCollected.clear();
+        return coinsCollected_return;
     }
 
     @Override
