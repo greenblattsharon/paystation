@@ -28,6 +28,7 @@ public class PayStationImpl implements PayStation {
     private int timeBought;
     private int totalAmount;
     private Map<Integer, Integer> coinsCollected = new HashMap<>();
+    private RateStrategy rateStrategy = new LinearRateStrategy();
 
 
     @Override
@@ -67,7 +68,7 @@ public class PayStationImpl implements PayStation {
                 throw new IllegalCoinException("Invalid coin: " + coinValue);
         }
         insertedSoFar += coinValue;
-        timeBought = insertedSoFar / 5 * 2;
+        timeBought = rateStrategy.calculateParkingTime(insertedSoFar);
     }
 
     @Override
@@ -111,7 +112,13 @@ public class PayStationImpl implements PayStation {
 
     }
 
+    @Override
+    public void changeRateStrategy(RateStrategy rateStrategy) {
+        this.rateStrategy = rateStrategy;
+    }
+
     private void reset() {
         timeBought = insertedSoFar = 0;
     }
+
 }

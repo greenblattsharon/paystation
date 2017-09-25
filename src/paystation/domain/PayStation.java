@@ -64,4 +64,5 @@ public interface PayStation {
      */
     int empty();
 
+    void changeRateStrategy(RateStrategy rateStrategy);
 }
